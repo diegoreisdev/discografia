@@ -9,6 +9,6 @@
 
 <label for="duracao">Duração da faixa</label>
 <input class="col-sm-4 rounded-pill shadow-none form-control my-1" value="{{$faixa->duracao ?? old('duracao')}}"
-    name="duracao" id="duracao" type="text" placeholder="00:00">
+    name="duracao" id="duracao" type="time" placeholder="00:00">
 
 <button class="btn btn-primary form-control rounded-pill my-3">Salvar</button>

@@ -15,7 +15,7 @@
 <body>
     <div class="container ">
         <header class="d-flex align-items-center justify-content-between p-4 bg-white">
-            <img src="{{url('images/logo.png')}}" alt="Tião Carreiro">
+            <a href="{{ route('discografia.index')}}"><img src="{{url('images/logo.png')}}" alt="Tião Carreiro"></a>
             <h1>Discografia</h1>
         </header>
         @yield('content')
