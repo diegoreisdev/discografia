@@ -9,63 +9,47 @@ use Illuminate\Support\Facades\Redirect;
 
 class AlbumController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    /* METÓDO RESPONSÁVEL POR CARREGAR A VIEW PRINCIPAL  
+    *****************************************************************************************/
     public function index(Request $request)
     {
         $cds = Album::with('faixas')->get();
-
-        if($request->input('procurar')){
+        if ($request->input('procurar')) {
 
             $cds = Album::procurar($request->input('procurar'));
         }
         return view('discografia.album.index', compact('cds'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    /* METÓDO RESPONSÁVEL POR CARREGAR A VIEW DA CRIAÇÃO DO ÁLBUM 
+    *****************************************************************************************/
     public function create()
     {
-        return view('discografia.album.create');
+        $title  = 'Criar';
+        $action = route('discografia.store');
+        return view('discografia.album.form', compact('title', 'action'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    /* METÓDO RESPONSÁVEL EM ADICIONAR O ÁLBUM 
+    *****************************************************************************************/
     public function store(AlbumRequest $request)
     {
         Album::create($request->all());
         return Redirect::route('discografia.index')->with('albumAdd', "Álbum {$request->nome} adicionado com sucesso");
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Album  $album
-     * @return \Illuminate\Http\Response
-     */
+    /* METÓDO RESPONSÁVEL POR CARREGAR A VIEW DE EDIÇÃO DO ÁLBUM 
+    *****************************************************************************************/
     public function edit($album)
     {
-        $album = Album::find($album);
-        return view('discografia.album.edit', compact('album'));
+        $title  = 'Editar';
+        $action = route('discografia.update', $album);
+        $album  = Album::find($album);
+        return view('discografia.album.form', compact('album', 'title', 'action'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Album  $album
-     * @return \Illuminate\Http\Response
-     */
+    /* METÓDO RESPONSÁVEL EM ATUALIZAR O ÁLBUM
+    *****************************************************************************************/
     public function update(AlbumRequest $request, $album)
     {
         $cd = Album::find($album);
@@ -73,12 +57,8 @@ class AlbumController extends Controller
         return Redirect::route('discografia.index')->with('albumUp', "Nome do álbum {$request->nome} atualizado");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Album  $album
-     * @return \Illuminate\Http\Response
-     */
+    /* METÓDO RESPONSÁVEL EM EXCLUIR O ÁLBUM
+    *****************************************************************************************/
     public function destroy(Album $album)
     {
         Album::destroy($album->id);

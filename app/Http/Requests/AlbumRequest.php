@@ -23,17 +23,18 @@ class AlbumRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'nome' => 'required|min:5|unique:albuns,nome'
-        ];
+        return
+            [
+                'nome' => "required|min:5|unique:albuns,nome,$this->album,id"
+            ];
     }
     public function messages()
     {
         return
-        [
-            'nome.required' => 'Por favor, digite o nome do álbum',
-            'nome.min' => 'O nome do álbum deve ter pelo menos 5 caracteres.',
-            'nome.unique' => 'O nome desse álbum já está sendo utilizado.'
-        ];
+            [
+                'nome.required' => 'Por favor, digite o     nome do   álbum',
+                'nome.min'      => 'O   nome   do     álbum deve ter  pelo  menos 5 caracteres.',
+                'nome.unique'   => 'O   nome   desse  álbum já   está sendo utilizado.'
+            ];
     }
 }

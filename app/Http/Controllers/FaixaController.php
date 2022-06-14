@@ -9,39 +9,20 @@ use Illuminate\Support\Facades\Redirect;
 
 class FaixaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($albumId)
-    {
-        if (!$albuns = Album::find($albumId)) {
-            return Redirect::back();
-        }
-        $faixas = $albuns->faixas()->get();
-        return view('discografia.faixa.index', compact('albuns', 'faixas'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    /* METÓDO RESPONSÁVEL POR CARREGAR A VIEW DA CRIAÇÃO DA FAIXA 
+    *****************************************************************************************/
     public function create($albumId)
     {
         if (!$albuns = Album::find($albumId)) {
             return Redirect::back();
         }
-        return view("discografia.faixa.create", compact('albuns'));
+        $title  = 'Criar';
+        $action = route('faixa.store', $albuns);
+        return view('discografia.faixa.form', compact('albuns', 'title', 'action'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    /* METÓDO RESPONSÁVEL EM ADICIONAR A FAIXA 
+    *****************************************************************************************/
     public function store(FaixaRequest $request, $albumId)
     {
         if (!$albuns = Album::find($albumId)) {
@@ -52,29 +33,22 @@ class FaixaController extends Controller
         return Redirect::route('faixa.create', $albuns->id)->with('faixaAdd', "A faixa {$request->nome_faixa} foi adicionada com sucesso");
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Faixa  $faixa
-     * @return \Illuminate\Http\Response
-     */
+    /* METÓDO RESPONSÁVEL POR CARREGAR A VIEW DA EDIÇÃO DA FAIXA 
+    *****************************************************************************************/
     public function edit($faixaId)
     {
         if (!$faixa = Faixa::find($faixaId)) {
             return Redirect::back();
         }
 
-        $cd = $faixa->albuns();
-        return view('discografia.faixa.edit', compact('cd', 'faixa'));
+        $cd     = $faixa->albuns();
+        $title  = 'Editar';
+        $action = route('faixa.update', $faixa);
+        return view('discografia.faixa.form', compact('cd', 'faixa', 'title', 'action'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Faixa  $faixa
-     * @return \Illuminate\Http\Response
-     */
+    /* METÓDO RESPONSÁVEL EM ATUALIZAR A FAIXA 
+    *****************************************************************************************/
     public function update(FaixaRequest $request, $faixaId)
     {
         if (!$faixa = Faixa::find($faixaId)) {
@@ -86,12 +60,8 @@ class FaixaController extends Controller
         return Redirect::route('discografia.index', $faixa->album_id)->with('faixaEdit', "A faixa {$request->nome_faixa} foi alterada com sucesso");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $faixa
-     * @return \Illuminate\Http\Response
-     */
+    /* METÓDO RESPONSÁVEL EM EXCLUIR A FAIXA 
+    *****************************************************************************************/
     public function destroy($faixa)
     {
         Faixa::destroy($faixa);
