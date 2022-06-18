@@ -25,20 +25,21 @@
                 @forelse ($cds as $cd)
                 {{-- INÍCIO DA TABELA --}}
                 <table>
-                    <div>
+                    <div class="row">
                         {{-- NOME DO ÁLBUM --}}
-                        <span class="nav-link text-dark col-sm-4 "><strong>Álbum:&nbsp{{ $cd->nome }}</strong></span>
+                        <span class="col-sm-4"><strong>Álbum:&nbsp{{ $cd->nome }}</strong></span>
 
-                        {{-- ADICIONAR MÚSICA --}}
-                        <a class="btn btn-outline-secondary rounded-pill btn-sm" href="{{ route('faixa.create', $cd->id) }}">+ Música</a>
-
-                        {{-- EDITAR O ÁLBUM --}}
-                        <a class="btn btn-outline-secondary rounded-pill btn-sm"
-                            href="{{route('discografia.edit', $cd->id)}}">Editar álbum</a>
-                        {{-- EXCLUIR O ÁLBUM --}}
-                        <a class="btn btn-outline-secondary rounded-pill btn-sm" href="{{route('discografia.destroy', $cd->id)}}"
-                            onclick="return confirm('Tem certeza que deseja excluir o álbum {{$cd->nome}}?')">Excluir álbum
-                        </a>
+                        <span class="col-sm-8">
+                            {{-- ADICIONAR MÚSICA --}}
+                            <a class="btn btn-outline-secondary rounded-pill btn-sm" href="{{ route('faixa.create', $cd->id) }}">+ Música</a>
+                            {{-- EDITAR O ÁLBUM --}}
+                            <a class="btn btn-outline-secondary rounded-pill btn-sm"
+                                href="{{route('discografia.edit', $cd->id)}}">Editar álbum</a>
+                            {{-- EXCLUIR O ÁLBUM --}}
+                            <a class="btn btn-outline-secondary rounded-pill btn-sm" href="{{route('discografia.destroy', $cd->id)}}"
+                                onclick="return confirm('Tem certeza que deseja excluir o álbum {{$cd->nome}}?')">Excluir álbum
+                            </a>
+                        </span>
                     </div>
                     </tr>
                     <thead>
